@@ -9,10 +9,12 @@
 import Foundation
 
 // Stores the information for one plant
-struct Plant: Identifiable {
+// Codable allows me to save my plant data and load it again when I reopen the app.
 
-    // Gives every plant a unique ID
-    let id = UUID()
+struct Plant: Identifiable, Codable {
+
+    // Each plant gets a unique ID that can also be restored when loading saved plants
+    var id = UUID()
 
     // Basic plant information
     var name: String
@@ -27,3 +29,5 @@ struct Plant: Identifiable {
     // Tracks whether the plant has been watered
     var isWatered: Bool = false
 }
+
+

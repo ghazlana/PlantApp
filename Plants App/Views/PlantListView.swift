@@ -42,7 +42,7 @@ struct PlantListView: View {
                     Text(progressMessage)
                     //.font(.caption)
                         .font(.system(size: 14))
-                        .foregroundStyle(.white)
+                        //.foregroundStyle(.white)
                     
                     // Displays watering progress
                     ProgressView(value: wateringProgress)
@@ -123,7 +123,7 @@ struct PlantListView: View {
                                 Text(plant.name)
                                     .font(.system(size: 30))
                                     .fontWeight(.medium)
-                                    .foregroundStyle(.white)
+                                    //.foregroundStyle(.white)
                                 
                                 // Light and water information
                                 HStack {
@@ -178,7 +178,9 @@ struct PlantListView: View {
                     
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color.black)
+                //.background(Color.black)
+                // Use an adaptive background to hide the trash button until I swipe
+                                .background(Color(uiColor: .systemBackground))
                 .offset(x: swipedPlantID == plant.id ? -80 : 0)
                 //highPriorityGesture to give the drag gesture priority over the row's normal interactions.
                 .highPriorityGesture(

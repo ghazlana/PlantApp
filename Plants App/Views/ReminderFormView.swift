@@ -95,8 +95,12 @@ struct ReminderFormView: View {
                     plant.light = plantLight
                     plant.water = plantWater
                     plant.wateringFrequency = wateringFrequency
-                    plant.wateringTime = wateringTime
-
+                    //plant.wateringTime = wateringTime
+                    // For a new plant, save the time when the user taps Save.
+                    // When editing, keep the original time so the watering schedule doesn't change.
+                    if editingPlant == nil {
+                        plant.wateringTime = Date()
+                    }
                     onSave(plant)
 
                 } label: {
@@ -126,10 +130,10 @@ struct ReminderFormView: View {
                 HStack(spacing: 8) {
 
                     Text("Plant Name")
-                        .foregroundStyle(.white)
+                       // .foregroundStyle(.white)
 
                     TextField("Pothos", text: $plantName)
-                        .foregroundStyle(.white)
+                       // .foregroundStyle(.white)
                 }
                 .padding(16)
                 .background(Color.gray.opacity(0.2))
@@ -140,10 +144,10 @@ struct ReminderFormView: View {
                     HStack {
 
                         Image(systemName: "location")
-                            .foregroundStyle(.white)
+                          //  .foregroundStyle(.white)
 
                         Text("Room")
-                            .foregroundStyle(.white)
+                           // .foregroundStyle(.white)
 
                         Spacer()
 
@@ -168,10 +172,10 @@ struct ReminderFormView: View {
                     HStack {
 
                         Image(systemName: "sun.max")
-                            .foregroundStyle(.white)
+                            //.foregroundStyle(.white)
 
                         Text("Light")
-                            .foregroundStyle(.white)
+                            //.foregroundStyle(.white)
 
                         Spacer()
 
@@ -195,10 +199,10 @@ struct ReminderFormView: View {
                     HStack {
 
                         Image(systemName: "drop")
-                            .foregroundStyle(.white)
+                            //.foregroundStyle(.white)
 
                         Text("Watering Days")
-                            .foregroundStyle(.white)
+                            //.foregroundStyle(.white)
 
                         Spacer()
 

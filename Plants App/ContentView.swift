@@ -15,16 +15,20 @@ struct ContentView: View {
     
     @State private var selectedPlant: Plant? = nil // Stores the plant the user wants to edit
     
+    private let notifications = Notifications()
     
     var body: some View {
         VStack(spacing: 20)  {
             Text("My Plants 🌱")
-            //.font(.title)
+           // .font(.largeTitle)
                 .font(.system(size: 38))
-              //  .fontWeight(.native) //native
+                .fontWeight(.bold)
                // .foregroundStyle()
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 25)
+            // A thin line under the title
+            Divider()
+                .background(Color.gray)
             
             
             if viewModel.plants.isEmpty && !hasOpenedReminderForm{
@@ -68,6 +72,10 @@ struct ContentView: View {
                       },
                     
                     onDeletePlant: { plant in
+                        
+                        // Cancel the plant's notification
+                           notifications.cancelNotification(for: plant)
+
                         viewModel.deletePlant(plant)
                     },
                     
@@ -83,6 +91,16 @@ struct ContentView: View {
         
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         //.background(Color.black)
+        .onAppear {
+            notifications.checkPendingNotifications()
+
+            // Check the original creation time saved for each plant
+            for plant in viewModel.plants {
+                print("Plant: \(plant.name)")
+                print("Created at: \(plant.wateringTime)")
+                print("Watering every: \(plant.wateringFrequency) days")
+            }
+        }
         .preferredColorScheme(.dark)
 
         //form
@@ -93,6 +111,9 @@ struct ContentView: View {
                         // Add the new plant through the ViewModel
                         viewModel.addPlant(plant)
 
+                        // Schedule the watering notification
+                        notifications.scheduleCreationTimeNotification(for: plant)
+                        
                         // Close the form
                         reminderForm = false
                     },
@@ -102,7 +123,12 @@ struct ContentView: View {
                         reminderForm = false
                     }
                 )
+ // to test notifications
+/*.onAppear {
+                notifications.scheduleTestNotification()            }*/
             
+            // TEMPORARY: Check saved notifications when the app opens
+           
             }
         
         // Opens the editing sheet when a plant is selected
@@ -116,7 +142,15 @@ struct ContentView: View {
 
                     // Update the existing plant in the ViewModel
                     viewModel.updatePlant(updatedPlant)
-
+                    
+                    
+                    // Update the notification only if the watering frequency changed
+                    // This prevents restarting the countdown when editing other information
+                    if plant.wateringFrequency != updatedPlant.wateringFrequency {
+                        // Update the plant's watering notification
+                        notifications.scheduleCreationTimeNotification(for: updatedPlant)
+                    }
+                    
                     // Close the editing sheet
                     selectedPlant = nil
                 },
@@ -126,7 +160,9 @@ struct ContentView: View {
                     selectedPlant = nil
                 },
                 onDelete: { plantToDelete in
-
+                    // Cancel the plant's notification
+                        notifications.cancelNotification(for: plantToDelete)
+                    
                     // Delete the selected plant
                     viewModel.deletePlant(plantToDelete)
 
@@ -164,8 +200,6 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .preferredColorScheme(.dark)
-
-
 }
 
 

@@ -24,13 +24,14 @@ struct WelcomeView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 190, height: 190)
-                .padding(.top, -180)
+                .padding(.top, -50)
+            
             VStack(spacing: 15) {
                 // Welcome title
                 Text("Start your plant journey!")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundStyle(.white)
+                   // .foregroundStyle(.white)
                 
                 // Description
                 Text("Now all your plants will be in one place and we will help you take care of them :)🪴")
@@ -62,4 +63,9 @@ struct WelcomeView: View {
             Spacer()
         }
     }
+}
+
+#Preview {
+    ContentView()
+        .preferredColorScheme(.dark)
 }

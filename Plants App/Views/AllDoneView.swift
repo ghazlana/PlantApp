@@ -31,7 +31,7 @@ struct AllDoneView: View {
                     Text("All Done! 🎉")
                         .font(.system(size: 25))
                         .fontWeight(.bold)
-                        .foregroundStyle(.white)
+                        //.foregroundStyle(.white)
                     
                     Text("All Reminders Completed")
                         .font(.subheadline)

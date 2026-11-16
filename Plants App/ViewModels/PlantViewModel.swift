@@ -14,10 +14,18 @@ class PlantViewModel {
 
     // Stores all the plants added by the user
     var plants: [Plant] = []
-
+    
+    // Load my saved plants when the app starts
+        init() {
+            loadPlants()
+        }
+    
     // Adds a new plant to the list
     func addPlant(_ plant: Plant) {
         plants.append(plant)
+
+        // Save the updated plants so they are not lost
+            savePlants()
     }
     
     // Updates an existing plant using its unique ID
@@ -31,6 +39,8 @@ class PlantViewModel {
             // Replace the old plant with the updated plant
             plants[index] = updatedPlant
         }
+        // Save the updated plants so they are not lost
+            savePlants()
     }
     
     // Changes the watering status of a specific plant
@@ -44,6 +54,8 @@ class PlantViewModel {
             // Switch between watered and not watered
             plants[index].isWatered.toggle()
         }
+        // Save the updated plants so they are not lost
+            savePlants()
     }
     
     // Counts how many plants have been watered
@@ -83,5 +95,33 @@ class PlantViewModel {
         plants.removeAll { currentPlant in
             currentPlant.id == plant.id
         }
+        savePlants()
     }
+    
+    
+    // Save my plants so they don't disappear when I close the app
+    func savePlants() {
+
+        // Convert the plants array into data that can be stored
+        if let data = try? JSONEncoder().encode(plants) {
+
+            // Save the data on the iPhone using the key "savedPlants"
+            UserDefaults.standard.set(data, forKey: "savedPlants")
+        }
+    }
+
+    // Load my saved plants when I open the app again
+    func loadPlants() {
+
+        // Find the data saved using the key "savedPlants"
+        if let data = UserDefaults.standard.data(forKey: "savedPlants") {
+
+            // Convert the saved data back into my plants array
+            if let savedPlants = try? JSONDecoder().decode([Plant].self, from: data) {
+
+                plants = savedPlants
+            }
+        }
+    }
+
 }
