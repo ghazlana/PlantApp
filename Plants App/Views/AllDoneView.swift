@@ -15,7 +15,7 @@ struct AllDoneView: View {
    
     var body: some View {
 
-        ZStack {
+      //  ZStack {
 
             // Center the plant illustration and messages
             VStack(spacing: 70) {
@@ -39,7 +39,7 @@ struct AllDoneView: View {
                 }
             }.offset(y: -80)
 
-        }
+      //  }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay(alignment: .bottomTrailing) {
 

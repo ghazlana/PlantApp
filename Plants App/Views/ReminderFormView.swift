@@ -14,11 +14,13 @@ struct ReminderFormView: View {
     // Temporary values entered by the user
     @State private var plantName = ""
     @State private var plantRoom = "Bedroom"
-    // @State private var showDeleteAlert = false// Controls whether the delete alert is visible
-    @State private var plantLight = "Full sun"
     @State private var plantWater = "20-50 ml"
     @State private var wateringFrequency = 3
+    @State private var plantLight = "Full sun"
     @State private var wateringTime = Date()
+
+    
+    
 
     // Actions received from ContentView
     var editingPlant: Plant? = nil    // The plant being edited, or nil when adding
@@ -250,28 +252,6 @@ struct ReminderFormView: View {
                 .background(Color.gray.opacity(0.2))
                 .clipShape(RoundedRectangle(cornerRadius: 30))
 
-                /* DatePicker(
-                    "Watering Time",
-                    selection: $wateringTime,
-                    displayedComponents: .hourAndMinute
-                )*/
-
-                /*Button("Save Reminder") {
-
-                    // Create a plant using the user's information
-                    let newPlant = Plant(
-                        name: plantName,
-                        room: plantRoom,
-                        wateringFrequency: wateringFrequency,
-                        wateringTime: wateringTime
-                    )
-
-                    // Add the new plant to the plants array
-                    plants.append(newPlant)
-
-                    // To close the sheet
-                    reminderForm = false
-                }*/
 
                 //Spacer()
 

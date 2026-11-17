@@ -28,6 +28,9 @@ struct Plant: Identifiable, Codable {
 
     // Tracks whether the plant has been watered
     var isWatered: Bool = false
-}
 
+    // Optional so plants saved before automatic resets can still be loaded.
+    var nextWateringReset: Date? = nil
+    
+}
 
