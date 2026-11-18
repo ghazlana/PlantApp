@@ -61,8 +61,10 @@ struct PlantListView: View {
        // List {
             
             // Display each saved plant
-        ForEach(plants) { plant in
-            ZStack(alignment: .trailing) {
+                // Display unchecked plants first and checked plants last
+                ForEach(plants.sorted { !$0.isWatered && $1.isWatered }) { plant in
+                    
+                    ZStack(alignment: .trailing) {
                 
                 // Delete button behind the plant row
                 Button {
@@ -177,6 +179,7 @@ struct PlantListView: View {
                         .background(Color.gray.opacity(0.3))
                     
                 }
+                .opacity(plant.isWatered ? 0.5 : 1.0)
                 .frame(maxWidth: .infinity)
                 //.background(Color.black)
                 // Use an adaptive background to hide the trash button until I swipe
