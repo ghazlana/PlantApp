@@ -139,23 +139,6 @@ struct ContentView: View {
                 print("Watering every: \(plant.wateringFrequency) days")
             }
         }
-        // SwiftUI cancels the previous task whenever the scene phase changes.
-        /*.task(id: scenePhase) {
-            guard scenePhase == .active else {
-                return
-            }
-
-            while !Task.isCancelled && scenePhase == .active {
-                viewModel.resetWateringIfNeeded()
-
-                do {
-                    try await Task.sleep(for: .seconds(30))
-                } catch {
-                    // Cancellation ends monitoring when the app is no longer active.
-                    return
-                }
-            }
-        }*/
         
         // Check watering deadlines when the app becomes active
         .onChange(of: scenePhase) { oldPhase, newPhase in
@@ -164,7 +147,7 @@ struct ContentView: View {
             }
         }
         
-        .preferredColorScheme(.dark)
+        //.preferredColorScheme(.dark)
 
         //form
         .sheet(isPresented: $reminderForm){
@@ -254,25 +237,7 @@ struct ContentView: View {
             }
 }
 
-/*struct PlantTextField: View {
 
-    let title: String
-
-    @Binding var text: String
-
-    var body: some View {
-
-        VStack(alignment: .leading, spacing: 8) {
-
-            Text(title)
-
-            TextField("Enter \(title)", text: $text)
-                .padding(14)
-                .background(Color.gray.opacity(0.2))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-    }
-}*/
 
 
 #Preview {

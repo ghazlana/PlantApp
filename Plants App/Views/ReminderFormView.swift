@@ -28,11 +28,13 @@ struct ReminderFormView: View {
     var onCancel: () -> Void
     var onDelete: (Plant) -> Void
 
+    
+    // @escaping lets me store these actions and call them later
     init(
         editingPlant: Plant? = nil,
         onSave: @escaping (Plant) -> Void,
         onCancel: @escaping () -> Void,
-        onDelete: @escaping (Plant) -> Void = { _ in }
+        onDelete: @escaping (Plant) -> Void = { _ in }// { _ in } is a default empty action because new plants don't need Delete
     ) {
         // Store the received plant and actions
         self.editingPlant = editingPlant
