@@ -15,6 +15,9 @@ class PlantViewModel {
 
     // Stores all the plants added by the user
     var plants: [Plant] = []
+    
+    // Manage plant notifications
+    private let notifications = Notifications()
 
     // Load my saved plants when the app starts
         init() {
@@ -46,6 +49,9 @@ class PlantViewModel {
 
         // Save the updated plants so they are not lost
             savePlants()
+        
+        // Request permission and schedule the new plant's reminder
+        notifications.requestPermission(for: newPlant)
 
     }
 
@@ -80,6 +86,9 @@ class PlantViewModel {
 
                 // Start a new watering cycle from the time of this edit
                 plantToSave.nextWateringReset = now.addingTimeInterval(interval)
+                
+                // Update the reminder when the watering frequency changes
+                notifications.scheduleCreationTimeNotification(for: plantToSave)
             }
             
             // Save the updated plant in its original position
@@ -200,6 +209,9 @@ class PlantViewModel {
     }
 
     func deletePlant(_ plant: Plant) {
+        
+        // Cancel the reminder before deleting the plant
+        notifications.cancelNotification(for: plant)
 
         plants.removeAll { currentPlant in
             currentPlant.id == plant.id

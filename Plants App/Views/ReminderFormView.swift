@@ -121,6 +121,7 @@ struct ReminderFormView: View {
                         )
                         .clipShape(Circle())
                 }
+                .disabled(plantName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
 
             }
             .padding(.top, 20)

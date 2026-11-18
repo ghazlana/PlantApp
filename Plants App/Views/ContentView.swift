@@ -20,7 +20,7 @@ struct ContentView: View {
     // Show the delete alert from the editing form
     @State private var showEditDeleteAlert = false
     
-    private let notifications = Notifications()
+   // private let notifications = Notifications()
     
     var body: some View {
         VStack(spacing: 20)  {
@@ -105,7 +105,7 @@ struct ContentView: View {
             }
 
             Button("Delete", role: .destructive) {
-                notifications.cancelNotification(for: plant)
+            //notifications.cancelNotification(for: plant)
                 viewModel.deletePlant(plant)
                 plantToDelete = nil
             }
@@ -130,7 +130,7 @@ struct ContentView: View {
                 at: Date().addingTimeInterval(2 * 24 * 60 * 60)
             )*/
 
-            notifications.checkPendingNotifications()
+            //notifications.checkPendingNotifications()
 
             // Check the original creation time saved for each plant
             for plant in viewModel.plants {
@@ -158,7 +158,7 @@ struct ContentView: View {
                         viewModel.addPlant(plant)
 
                         // Ask for permission, then schedule the reminder
-                        notifications.requestPermission(for: plant)
+                       // notifications.requestPermission(for: plant)
                         
                         // Close the form
                         reminderForm = false
@@ -190,13 +190,7 @@ struct ContentView: View {
                     viewModel.updatePlant(updatedPlant)
                     
                     
-                    // Update the notification only if the watering frequency changed
-                    // This prevents restarting the countdown when editing other information
-                    if plant.wateringFrequency != updatedPlant.wateringFrequency {
-                        // Update the plant's watering notification
-                        notifications.scheduleCreationTimeNotification(for: updatedPlant)
-                    }
-                    
+                   
                     // Close the editing sheet
                     selectedPlant = nil
                 },
@@ -223,7 +217,7 @@ struct ContentView: View {
                 }
 
                 Button("Delete", role: .destructive) {
-                    notifications.cancelNotification(for: plant)
+                  //  notifications.cancelNotification(for: plant)
                     viewModel.deletePlant(plant)
                     selectedPlant = nil
                     plantToDelete = nil
